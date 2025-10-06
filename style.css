@@ -474,23 +474,28 @@
             color: #fff;
         }
 
-        .skill-level {
-            display: flex;
-            gap: 3px;
-        }
+        .skill-hexagons {
+    display: flex;
+    gap: 5px;
+}
 
-        .skill-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(114, 161, 222, 0.3);
-            transition: all 0.3s ease;
-        }
+.hexagon {
+    width: 20px;
+    height: 12px;
+    background: rgba(114, 161, 222, 0.2);
+    position: relative;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    transition: all 0.3s ease;
+}
 
-        .skill-dot.active {
-            background: #72a1dea2;
-            box-shadow: 0 0 10px #72a1dea2;
-        }
+.hexagon.filled {
+    background: linear-gradient(135deg, #72a1dea2, #9b59b6);
+    box-shadow: 0 0 10px rgba(114, 161, 222, 0.5);
+}
+
+.skill-item:hover .hexagon.filled {
+    transform: scale(1.1);
+}
 
         /* Projects Section */
         .projects-grid {
