@@ -28,6 +28,195 @@
             <div class="social-nav">
                 <a href="https://github.com/hero-itsme"><i class='bx bxl-github'></i></a>
                 <a href="https://linkedin.com/in/komal-mishra0512"><i class='bx bxl-linkedin-square'></i></a>
+                <a href="mailto:komal0512mishra@gmail.com"><i class='bx bx-envelope'></i></a>
+                <a href="tel:+919999114042"><i class='bx bx-phone'></i></a>
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 Komal Mishra. Made with ❤️ for Cyber Security.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generate animated stars
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animation classes
+        const animatedElements = document.querySelectorAll('.section-title, .timeline-item, .skill-category, .project-card, .cert-card, .about-text, .contact-info, .contact-form');
+        animatedElements.forEach(el => observer.observe(el));
+
+        // Animate skill dots with delay
+        function animateSkillDots() {
+            const skillCategories = document.querySelectorAll('.skill-category');
+            skillCategories.forEach((category, categoryIndex) => {
+                setTimeout(() => {
+                    const skillItems = category.querySelectorAll('.skill-item');
+                    skillItems.forEach((item, itemIndex) => {
+                        setTimeout(() => {
+                            const dots = item.querySelectorAll('.skill-dot.active');
+                            dots.forEach((dot, dotIndex) => {
+                                setTimeout(() => {
+                                    dot.style.animation = 'pulse 0.5s ease';
+                                }, dotIndex * 100);
+                            });
+                        }, itemIndex * 200);
+                    });
+                }, categoryIndex * 300);
+            });
+        }
+
+        // Contact form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="bx bx-check"></i> Message Sent!';
+                submitBtn.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.style.background = 'linear-gradient(45deg, #72a1dea2, #9b59b6)';
+                    submitBtn.disabled = false;
+                    this.reset();
+                }, 2000);
+            }, 2000);
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Typing effect for hero subtitle
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', () => {
+            createStars();
+            
+            // Start typing effect after hero animation
+            setTimeout(() => {
+                const subtitle = document.querySelector('.hero-subtitle');
+                typeWriter(subtitle, 'Cybersecurity Analyst & Digital Guardian', 80);
+            }, 1500);
+            
+            // Animate skills after they come into view
+            const skillsSection = document.querySelector('#skills');
+            const skillsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(animateSkillDots, 500);
+                        skillsObserver.unobserve(entry.target);
+                    }
+                });
+            });
+            skillsObserver.observe(skillsSection);
+        });
+
+        // Add pulse animation keyframe
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); box-shadow: 0 0 20px #72a1dea2; }
+                100% { transform: scale(1); }
+            }
+            
+            .nav-links.active {
+                display: flex;
+                position: fixed;
+                top: 60px;
+                right: 0;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                border-radius: 10px 0 0 10px;
+            }
+            
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html></a>
+                <a href="https://linkedin.com/in/komal-mishra0512"><i class='bx bxl-linkedin-square'></i></a>
             </div>
             <div class="menu-toggle">
                 <i class='bx bx-menu'></i>
@@ -193,8 +382,8 @@
                         <div class="skill-dot"></div>
                     </div>
                 </div>
-            
-        </div>
+            </div>
+
             <div class="skill-category">
                 <h3>Security Tools</h3>
                 <div class="skill-item">
@@ -604,13 +793,13 @@
             </div>
             
         </div>
+    </section>
     <!-- Contact Section -->
     <section id="contact" class="section">
         <h2 class="section-title">Let's Connect</h2>
         <div class="contact-content">
             <div class="contact-info">
                 <h3>Get in Touch</h3>
-                </div>
                 <div class="contact-item">
                     <i class='bx bx-envelope contact-icon'></i>
                     <div>
@@ -663,193 +852,4 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-social">
-                <a href="https://github.com/hero-itsme"><i class='bx bxl-github'></i></a>
-                <a href="https://linkedin.com/in/komal-mishra0512"><i class='bx bxl-linkedin-square'></i></a>
-                <a href="mailto:komal0512mishra@gmail.com"><i class='bx bx-envelope'></i></a>
-                <a href="tel:+919999114042"><i class='bx bx-phone'></i></a>
-            </div>
-            <div class="footer-text">
-                <p>&copy; 2025 Komal Mishra. Made with ❤️ for Cyber Security.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Generate animated stars
-        function createStars() {
-            const starsContainer = document.querySelector('.stars');
-            const numberOfStars = 100;
-
-            for (let i = 0; i < numberOfStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                starsContainer.appendChild(star);
-            }
-        }
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all elements with animation classes
-        const animatedElements = document.querySelectorAll('.section-title, .timeline-item, .skill-category, .project-card, .cert-card, .about-text, .contact-info, .contact-form');
-        animatedElements.forEach(el => observer.observe(el));
-
-        // Animate skill dots with delay
-        function animateSkillDots() {
-            const skillCategories = document.querySelectorAll('.skill-category');
-            skillCategories.forEach((category, categoryIndex) => {
-                setTimeout(() => {
-                    const skillItems = category.querySelectorAll('.skill-item');
-                    skillItems.forEach((item, itemIndex) => {
-                        setTimeout(() => {
-                            const dots = item.querySelectorAll('.skill-dot.active');
-                            dots.forEach((dot, dotIndex) => {
-                                setTimeout(() => {
-                                    dot.style.animation = 'pulse 0.5s ease';
-                                }, dotIndex * 100);
-                            });
-                        }, itemIndex * 200);
-                    });
-                }, categoryIndex * 300);
-            });
-        }
-
-        // Contact form submission
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission
-            setTimeout(() => {
-                submitBtn.innerHTML = '<i class="bx bx-check"></i> Message Sent!';
-                submitBtn.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
-                
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.style.background = 'linear-gradient(45deg, #72a1dea2, #9b59b6)';
-                    submitBtn.disabled = false;
-                    this.reset();
-                }, 2000);
-            }, 2000);
-        });
-
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Typing effect for hero subtitle
-        function typeWriter(element, text, speed = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Initialize animations when page loads
-        window.addEventListener('load', () => {
-            createStars();
-            
-            // Start typing effect after hero animation
-            setTimeout(() => {
-                const subtitle = document.querySelector('.hero-subtitle');
-                typeWriter(subtitle, 'Cybersecurity Analyst & Digital Guardian', 80);
-            }, 1500);
-            
-            // Animate skills after they come into view
-            const skillsSection = document.querySelector('#skills');
-            const skillsObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        setTimeout(animateSkillDots, 500);
-                        skillsObserver.unobserve(entry.target);
-                    }
-                });
-            });
-            skillsObserver.observe(skillsSection);
-        });
-
-        // Add pulse animation keyframe
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.2); box-shadow: 0 0 20px #72a1dea2; }
-                100% { transform: scale(1); }
-            }
-            
-            .nav-links.active {
-                display: flex;
-                position: fixed;
-                top: 60px;
-                right: 0;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(10px);
-                flex-direction: column;
-                padding: 2rem;
-                border-radius: 10px 0 0 10px;
-            }
-            
-            @media (max-width: 768px) {
-                .nav-links {
-                    display: none;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-</body>
-</html>
+                <a href="https://github.com/hero-itsme"><i class='bx bxl-github'></i>
