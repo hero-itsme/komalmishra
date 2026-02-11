@@ -159,7 +159,7 @@ const statsObserver = new IntersectionObserver((entries) => {
             const stats = entry.target.querySelectorAll('.stat h3');
             
             stats.forEach((stat, index) => {
-                const values = [4, 15, 6]; // Corresponding to your resume stats
+                const values = [2, 10, 6]; // Corresponding to your resume stats
                 setTimeout(() => {
                     animateCounter(stat, values[index], 1500);
                 }, index * 200);
